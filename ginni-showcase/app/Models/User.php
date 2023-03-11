@@ -20,8 +20,9 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
-        'password',
-    ];
+        'password'
+        
+        ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -41,4 +42,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected function setPasswordAttribute($password)
+    {
+        $this->attributes['password'] = bcrypt($password);
+    }
+
+    public function isAdmin() {
+        if ($this->email === 'ginni@home.com') {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
